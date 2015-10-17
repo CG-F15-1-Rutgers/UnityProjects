@@ -31,7 +31,7 @@ public class RayCaster : MonoBehaviour
                 if (objectHit.tag.ToString().Equals("Agent") && firstClick ==false)
                 {
                    // collisionObj = hit.transform;
-                    print("DETECTED AGENT!");
+                    print("DETECTED AGENT MAN!");
                     agent = objectHit.gameObject.GetComponent<NavMeshAgent>();
                     firstClick = true;
                 }
