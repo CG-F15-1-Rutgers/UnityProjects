@@ -23,11 +23,11 @@ public class BoulderController : MonoBehaviour {
         if (Physics.Raycast(ray, out hit))
         {
             objectHit = hit.transform;
-            print(clicked);
+            //print(clicked);
             if (Input.GetMouseButtonDown(0) && clicked == false)
             {
 
-                print("HERE");
+                //print("HERE");
                 if (objectHit.transform.gameObject.Equals(this.gameObject)) {
                     //print(objectHit.transform.gameObject.name + " GO GO GO!");
                     //print(this.gameObject.name);
@@ -40,7 +40,7 @@ public class BoulderController : MonoBehaviour {
         }
         if (Input.GetMouseButtonDown(0) && clicked == true && !objectHit.transform.gameObject.Equals(this.gameObject))
         {
-            print("UNEQUIPPED!");
+            //print("UNEQUIPPED!");
             clicked = false;
         }
         if (clicked)
@@ -65,7 +65,7 @@ public class BoulderController : MonoBehaviour {
                 moveVertical = -1;
             }
             Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-            print(movement);
+            //print(movement);
             rb.AddForce(movement * speed);
             
         }
