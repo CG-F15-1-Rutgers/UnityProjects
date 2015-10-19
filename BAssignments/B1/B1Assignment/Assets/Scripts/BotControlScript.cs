@@ -38,7 +38,7 @@ public class BotControlScript : MonoBehaviour
 		// initialising reference variables
 		anim = GetComponent<Animator>();					  
 		col = GetComponent<CapsuleCollider>();				
-		enemy = GameObject.Find("Enemy").transform;	
+		//enemy = GameObject.Find("Enemy").transform;	
 		if(anim.layerCount ==2)
 			anim.SetLayerWeight(1, 1);
 	}
@@ -51,32 +51,21 @@ public class BotControlScript : MonoBehaviour
 		anim.SetFloat("Speed", v);							// set our animator's float parameter 'Speed' equal to the vertical input axis				
 		anim.SetFloat("Direction", h); 						// set our animator's float parameter 'Direction' equal to the horizontal input axis		
 		anim.speed = animSpeed;								// set the speed of our animator to the public variable 'animSpeed'
-		anim.SetLookAtWeight(lookWeight);					// set the Look At Weight - amount to use look at IK vs using the head's animation
+		//anim.SetLookAtWeight(lookWeight);					// set the Look At Weight - amount to use look at IK vs using the head's animation
 		currentBaseState = anim.GetCurrentAnimatorStateInfo(0);	// set our currentState variable to the current state of the Base Layer (0) of animation
 		
 		if(anim.layerCount ==2)		
-			layer2CurrentState = anim.GetCurrentAnimatorStateInfo(1);	// set our layer2CurrentState variable to the current state of the second Layer (1) of animation
-		
-		
-		// LOOK AT ENEMY
-		
-		// if we hold Alt..
-		if(Input.GetButton("Fire2"))
-		{
-			// ...set a position to look at with the head, and use Lerp to smooth the look weight from animation to IK (see line 54)
-			anim.SetLookAtPosition(enemy.position);
-			lookWeight = Mathf.Lerp(lookWeight,1f,Time.deltaTime*lookSmoother);
-		}
-		// else, return to using animation for the head by lerping back to 0 for look at weight
-		else
-		{
-			lookWeight = Mathf.Lerp(lookWeight,0f,Time.deltaTime*lookSmoother);
-		}
-		
-		// STANDARD JUMPING
-		
-		// if we are currently in a state called Locomotion (see line 25), then allow Jump input (Space) to set the Jump bool parameter in the Animator to true
-		if (currentBaseState.nameHash == locoState)
+			layer2CurrentState = anim.GetCurrentAnimatorStateInfo(1);   // set our layer2CurrentState variable to the current state of the second Layer (1) of animation
+
+        if (currentBaseState.nameHash == locoState)
+        {
+
+        }
+
+            // STANDARD JUMPING
+
+            // if we are currently in a state called Locomotion (see line 25), then allow Jump input (Space) to set the Jump bool parameter in the Animator to true
+            if (currentBaseState.nameHash == locoState)
 		{
 			if(Input.GetButtonDown("Jump"))
 			{
@@ -116,39 +105,6 @@ public class BotControlScript : MonoBehaviour
 			}
 		}
 		
-		
-		// JUMP DOWN AND ROLL 
-		
-		// if we are jumping down, set our Collider's Y position to the float curve from the animation clip - 
-		// this is a slight lowering so that the collider hits the floor as the character extends his legs
-		else if (currentBaseState.nameHash == jumpDownState)
-		{
-			col.center = new Vector3(0, anim.GetFloat("ColliderY"), 0);
-		}
-		
-		// if we are falling, set our Grounded boolean to true when our character's root 
-		// position is less that 0.6, this allows us to transition from fall into roll and run
-		// we then set the Collider's Height equal to the float curve from the animation clip
-		else if (currentBaseState.nameHash == fallState)
-		{
-			col.height = anim.GetFloat("ColliderHeight");
-		}
-		
-		// if we are in the roll state and not in transition, set Collider Height to the float curve from the animation clip 
-		// this ensures we are in a short spherical capsule height during the roll, so we can smash through the lower
-		// boxes, and then extends the collider as we come out of the roll
-		// we also moderate the Y position of the collider using another of these curves on line 128
-		else if (currentBaseState.nameHash == rollState)
-		{
-			if(!anim.IsInTransition(0))
-			{
-				if(useCurves)
-					col.height = anim.GetFloat("ColliderHeight");
-				
-				col.center = new Vector3(0, anim.GetFloat("ColliderY"), 0);
-				
-			}
-		}
 		// IDLE
 		
 		// check if we are at idle, if so, let us Wave!
