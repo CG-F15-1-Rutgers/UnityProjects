@@ -126,6 +126,8 @@ public class BotControlScript : MonoBehaviour
 		}
 	}
 
+
+
     void OnTriggerEnter(Collider other)
     {
        // if (other.gameObject.CompareTag("Spring"))
@@ -137,11 +139,11 @@ public class BotControlScript : MonoBehaviour
                 if (other.gameObject.CompareTag("Spring"))
                 {
                     other.GetComponent<Animator>().enabled = true;
-                    rb.AddForce(new Vector3(0, 500, 0), ForceMode.Acceleration);
+                    rb.AddForce(new Vector3(00, 500, 0), ForceMode.Acceleration);
                 }
                  if (other.gameObject.CompareTag("Door"))
                 {
-                    other.GetComponentInParent<Animator>().enabled = false;
+                    other.GetComponentInParent<Animator>().enabled = true;
                     //other.GetComponentInParent<Animator>().Play("DoorOpen") ;
                 }
 
@@ -153,7 +155,7 @@ public class BotControlScript : MonoBehaviour
                 if (other.gameObject.CompareTag("Spring"))
                 {
                     other.GetComponent<Animator>().enabled = false;
-                    rb.AddForce(new Vector3(0, 500, 0), ForceMode.Acceleration);
+                    rb.AddForce(new Vector3(00, 500, 0), ForceMode.Acceleration);
                 }
                  if (other.gameObject.CompareTag("Door"))
                 {
@@ -167,5 +169,6 @@ public class BotControlScript : MonoBehaviour
             //print("JUMPOP");
             
         }
+
     }
 }
